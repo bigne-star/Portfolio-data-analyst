@@ -1,0 +1,31 @@
+-- Analyse du marché des voitures d'occasion
+-- Auteur : Ton Nom
+-- Objectif : Identifier tendances de prix, modèles populaires et kilométrage
+
+-- 1️⃣ Prix moyen par marque
+SELECT brand,
+       ROUND(AVG(price_eur), 2) AS avg_price
+FROM used_cars
+GROUP BY brand
+ORDER BY avg_price DESC;
+
+-- 2️⃣ Modèles les plus vendus (top 5)
+SELECT brand, model,
+       COUNT(*) AS num_cars
+FROM used_cars
+GROUP BY brand, model
+ORDER BY num_cars DESC
+LIMIT 5;
+
+-- 3️⃣ Kilométrage moyen par type de transmission
+SELECT transmission_type,
+       ROUND(AVG(mileage), 0) AS avg_mileage
+FROM used_cars
+GROUP BY transmission_type;
+
+-- 4️⃣ Modèles chers mais faible kilométrage (top 5)
+SELECT brand, model, price_eur, mileage
+FROM used_cars
+WHERE mileage < 50000
+ORDER BY price_eur DESC
+LIMIT 5;
